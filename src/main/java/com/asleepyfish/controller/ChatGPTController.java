@@ -6,6 +6,7 @@ import io.github.asleepyfish.service.OpenAiProxyService;
 import io.github.asleepyfish.util.OpenAiUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
@@ -20,10 +21,15 @@ import java.util.List;
  * @Description: ChatGPTController
  */
 @RestController
+@RequestMapping("/chat")
 public class ChatGPTController {
     @Autowired
     private ChatAIManager chatAIManager;
 
+    @GetMapping("/hello")
+    public String test(@PathParam("input") String input){
+        return "hello";
+    }
     @GetMapping("/chatAI")
     public String chatAI(@PathParam("input") String input){
         return chatAIManager.chatAI(input);

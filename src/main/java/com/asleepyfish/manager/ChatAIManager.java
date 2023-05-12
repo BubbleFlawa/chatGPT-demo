@@ -21,7 +21,7 @@ public class ChatAIManager {
 
     private static final String URL = "https://api.openai.com/v1/chat/completions";
 
-    private static final String API_KEY = "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";
+    private static final String API_KEY = "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";
 
     public String chatAI(String input) {
         String content = "";
@@ -31,7 +31,7 @@ public class ChatAIManager {
             return content;
         }
         //设置消息
-        List<Message> list = new ArrayList<Message>();
+        List<Message> list = new ArrayList<>();
         Message message = new Message();
         message.setRole("user");
         message.setContent(input);
@@ -51,9 +51,10 @@ public class ChatAIManager {
                 .body();
         //回传参数转换类型
         ResponseBody body = JSON.parseObject(reqJSON, ResponseBody.class);
-        content = body.getChoices().get(0).getMessage().getContent();
-        //输出回值消息
-        System.out.println(content);
-        return content;
+//        content = body.getChoices().get(0).getMessage().getContent();
+//        //输出回值消息
+//        System.out.println(content);
+//        return content;
+        return body.getChoices().get(0).getMessage().getContent();
     }
 }

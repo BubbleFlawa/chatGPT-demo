@@ -28,6 +28,7 @@ public class ChatGPTController {
     public String chatAI(@PathParam("input") String input){
         return chatAIManager.chatAI(input);
     }
+
     /**
      * 普通问答
      */

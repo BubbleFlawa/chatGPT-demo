@@ -1,4 +1,4 @@
-package com.asleepyfish.example.entity;
+package com.asleepyfish.entity;
 
 public class Usage {
     private Integer prompt_tokens;

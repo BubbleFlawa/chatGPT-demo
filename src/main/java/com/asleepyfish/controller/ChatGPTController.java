@@ -1,15 +1,17 @@
 package com.asleepyfish.controller;
 
+import com.asleepyfish.entity.User;
 import com.asleepyfish.manager.ChatAIManager;
 import io.github.asleepyfish.config.ChatGPTProperties;
 import io.github.asleepyfish.service.OpenAiProxyService;
 import io.github.asleepyfish.util.OpenAiUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.websocket.server.PathParam;
 import java.io.IOException;
 import java.time.Duration;
@@ -20,20 +22,59 @@ import java.util.List;
  * @Date: 2023-02-18 14:44
  * @Description: ChatGPTController
  */
-@RestController
+@Controller
 @RequestMapping("/chat")
 public class ChatGPTController {
     @Autowired
     private ChatAIManager chatAIManager;
 
-    @GetMapping("/hello")
-    public String test(@PathParam("input") String input){
-        return "hello";
+    /**
+     * 会话页面
+     */
+    @GetMapping("/chatWeb")
+    public String chatWeb(){
+        return "index.html";
     }
-    @GetMapping("/chatAI")
-    public String chatAI(@PathParam("input") String input){
+
+    /**
+     * chat会话
+     * @param input
+     * @return
+     */
+    @GetMapping("/chatAI/{input}")
+    @ResponseBody
+    public String chatAI(@PathVariable String input){
         return chatAIManager.chatAI(input);
     }
+
+    @GetMapping("/register")
+    public String register(){
+        return "";
+    }
+
+    @GetMapping("/login")
+    public String login(){
+        return "login";
+    }
+
+    @GetMapping("success.html")
+    public String successPage(HttpSession session, Model model) {
+        Object loginUser = session.getAttribute("loginUser");
+        if (loginUser != null) {
+            return "success";
+        } else {
+            model.addAttribute("msg", "请登录");
+            return "login";
+        }
+    }
+
+    @GetMapping("/success")
+    public String success(HttpSession session, Model model) {
+        return "success";
+    }
+
+
+
 
     /**
      * 普通问答

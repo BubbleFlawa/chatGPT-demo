@@ -1,8 +1,21 @@
+
 chatgpt:
-  token: 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
   proxy-host: 127.0.0.1
   proxy-port: 10809
   model: text-davinci-003 #可选
   chat-model: gpt-3.5-turbo #可选 模型
   retries: 10 #重新请求次数可选，默认为5
   session-expiration-time: 10 #可选，不填则会话永不过期
+  token: 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
+spring:
+  web:
+    resources:
+      static-locations: classpath:/static/, classpath:/templates/
+  mvc:
+    static-path-pattern: /static/**
+  thymeleaf:
+    prefix: classpath:/templates/
+    mode: HTML
+    encoding: UTF-8
+server:
+  port: 8080

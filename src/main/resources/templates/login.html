@@ -1,0 +1,58 @@
+<!DOCTYPE html >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>登录注册界面</title>
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+
+<body>
+<!-- 整体布局 -->
+<div class="container right-panel-active">
+
+    <!-- 注册框 -->
+    <div class="container_from container_signup">
+        <form class="from" method="post" id="from1" th:action="@{/register}">
+            <h2 class="form_title">注册账号</h2>
+            <span th:text="${tip}"></span>
+            <input type="email" name="Email" placeholder="请输入邮箱" class="input">
+            <input type="text" name="username" placeholder="请输入账号" class="input">
+            <input type="password" name="password" placeholder="请输入密码" class="input">
+            <input type="password" name="password1" placeholder="再次确认密码" class="input">
+            <input class="btn" type="submit" value="点击注册"/>
+        </form>
+    </div>
+
+    <!-- 登录框 -->
+    <div class="container_from container_signin">
+        <form class="from" id="from2" action="success.html" method="post" th:action="@{/login2}">
+            <h2 class="form_title">欢迎登录</h2>
+            <span th:text="${msg}"></span>
+            <input type="text" name="username" placeholder="请输入您的账号" class="input">
+            <input type="password" name="password" placeholder="请输入您的密码" class="input">
+            <div>
+                <span>记住密码</span><input type="checkbox" name="rup" id="rup"/>
+                <span>自动登录</span><input type="checkbox" name="autoLogin"/>
+            </div>
+            <a href="#" class="link">忘记密码?</a>
+            <input type="submit" class="btn" value="登录"/>
+        </form>
+    </div>
+
+    <!--控制注册与登录移动-->
+    <div class="container_overlay">
+        <div class="overlay">
+            <div class="overlay_panel overlay_left">
+                <button class="btn" id="signin">已有账号，直接登录</button>
+            </div>
+            <div class="overlay_panel overlay_right">
+                <button class="btn" id="signup">没有账号，点击注册</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../static/login.js"></script>
+</body>
+</html>

@@ -2,9 +2,9 @@ package com.asleepyfish.manager;
 
 import cn.hutool.http.HttpRequest;
 import com.alibaba.fastjson2.JSON;
-import com.asleepyfish.example.entity.Message;
-import com.asleepyfish.example.entity.RequestBody;
-import com.asleepyfish.example.entity.ResponseBody;
+import com.asleepyfish.entity.Message;
+import com.asleepyfish.entity.RequestBody;
+import com.asleepyfish.entity.ResponseBody;
 import org.springframework.stereotype.Service;
 
 import java.net.InetSocketAddress;
@@ -21,9 +21,10 @@ public class ChatAIManager {
 
     private static final String URL = "https://api.openai.com/v1/chat/completions";
 
-    private static final String API_KEY = "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";
+    private static final String API_KEY = "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";
 
     public String chatAI(String input) {
+//        return JSON.toJSONString("hello");
         String content = "";
         //输入
         if ("exit".equals(input)) {
@@ -52,9 +53,11 @@ public class ChatAIManager {
         //回传参数转换类型
         ResponseBody body = JSON.parseObject(reqJSON, ResponseBody.class);
 //        content = body.getChoices().get(0).getMessage().getContent();
-//        //输出回值消息
-//        System.out.println(content);
+        //输出回值消息
+        System.out.println(content);
 //        return content;
-        return body.getChoices().get(0).getMessage().getContent();
+        return JSON.toJSONString(body.getChoices().get(0).getMessage().getContent());
+//        return body.getChoices().get(0).getMessage().getContent();
+
     }
 }

@@ -31,12 +31,16 @@ spring:
 server:
   port: 8080
 
-com:
+ximo:
   mqtt:
-    url: tcp://192.168.3.221:18083
-    clientId: mqtt_test1234
-    topics: topic01,topic02
+    host: tcp://192.168.3.221:1883
+    #MQTT-连接服务器默认客户端ID
+    clientid: mqttjs_6589ad2cec
+    #MQTT-用户名
     username: admin
+    #MQTT-密码
     password: public
-    timeout: 10
-    keepalive: 20
+    #连接超时
+    timeout: 1000
+    #心跳检查时间
+    keepalive: 10

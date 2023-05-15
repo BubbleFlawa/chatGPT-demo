@@ -23,10 +23,10 @@ public class ChatAIManager {
 
     private static final String URL = "https://api.openai.com/v1/chat/completions";
 
-    private static final String API_KEY = "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";
+    private static final String API_KEY = "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";
 
     public String chatAI(String input) {
-//        return JSON.toJSONString("hello");
+    //return JSON.toJSONString("hello");
         String content = "";
         //输入
         if ("exit".equals(input)) {

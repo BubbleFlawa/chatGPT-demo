@@ -15,23 +15,26 @@ import java.util.Map;
 public class ShiroConfig {
     @Autowired
     private MyRealm myRealm;
+
     @Bean
     public DefaultWebSecurityManager securityManager() {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         securityManager.setRealm(myRealm);
         return securityManager;
     }
+
     @Bean
     public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager) {
         ShiroFilterFactoryBean shiroFilter = new ShiroFilterFactoryBean();
         shiroFilter.setSecurityManager(securityManager);
-        shiroFilter.setLoginUrl("/login");
-        shiroFilter.setSuccessUrl("/success");
-        shiroFilter.setUnauthorizedUrl("/unauthorized");
-        Map<String,String> filterChainDefinitionMap = new LinkedHashMap<>();
-        filterChainDefinitionMap.put("/login", "anon");
+        //shiroFilter.setLoginUrl("/login");
+        //shiroFilter.setSuccessUrl("/success");
+        //shiroFilter.setUnauthorizedUrl("/unauthorized");
+        Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
+        //filterChainDefinitionMap.put("/login", "anon");
         filterChainDefinitionMap.put("/logout", "logout");
-        filterChainDefinitionMap.put("/**", "authc");
+        //filterChainDefinitionMap.put("/**", "authc");
+        filterChainDefinitionMap.put("/**", "anon");
         shiroFilter.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilter;
     }

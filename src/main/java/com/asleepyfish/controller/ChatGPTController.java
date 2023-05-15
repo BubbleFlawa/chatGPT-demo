@@ -26,32 +26,46 @@ public class ChatGPTController {
     @Autowired
     private ChatAIManager chatAIManager;
 
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
+//    @Autowired
+//    private MqttGateWay
+
+    /**
+     * 向指定的主题中发送消息
+     */
+//    private String sendMqtt(@RequestParam("topic")String topic,@RequestParam("data")String data) {
+//        System.out.println(sendData);
+//        System.out.println("进入sendMqtt--------" + sendData);
+//
+//    }
+
     /**
      * 会话页面
      */
     @GetMapping("/chatWeb")
-    public String chatWeb(){
+    public String chatWeb() {
         return "index.html";
     }
 
     /**
      * chat会话
+     *
      * @param input
      * @return
      */
     @GetMapping("/chatAI/{input}")
     @ResponseBody
-    public String chatAI(@PathVariable String input){
+    public String chatAI(@PathVariable String input) {
         return chatAIManager.chatAI(input);
     }
 
     @GetMapping("/register")
-    public String register(){
+    public String register() {
         return "";
     }
 
     @GetMapping("/login")
-    public String login(){
+    public String login() {
         return "login";
     }
 
@@ -76,8 +90,6 @@ public class ChatGPTController {
     public String websocket(HttpSession session, Model model) {
         return "websocket";
     }
-
-
 
 
     /**

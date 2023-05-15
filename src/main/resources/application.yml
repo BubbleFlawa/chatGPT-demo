@@ -26,3 +26,12 @@ spring:
 server:
   port: 8080
 
+com:
+  mqtt:
+    url: tcp://192.168.3.221:18083
+    clientId: mqtt_test1234
+    topics: topic01,topic02
+    username: admin
+    password: public
+    timeout: 10
+    keepalive: 20

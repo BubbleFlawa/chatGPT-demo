@@ -8,7 +8,6 @@
         <version>2.7.11</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-
     <groupId>com.asleepyfish</groupId>
     <artifactId>chatgpt-demo</artifactId>
     <version>0.0.1-SNAPSHOT</version>
@@ -52,7 +51,6 @@
             <artifactId>lombok</artifactId>
             <version>1.18.22</version>
         </dependency>
-
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
@@ -63,8 +61,11 @@
             <artifactId>httpclient</artifactId>
             <version>4.5.13</version>
         </dependency>
-
-
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-spring-boot-web-starter</artifactId>
+            <version>1.7.1</version>
+        </dependency>
     </dependencies>
 
     <build>

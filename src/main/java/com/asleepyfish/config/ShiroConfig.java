@@ -13,25 +13,35 @@ import java.util.Map;
 
 @Configuration
 public class ShiroConfig {
-    @Autowired
-    private MyRealm myRealm;
+    @Bean(name = "myRealm")
+    public MyRealm myRealm(){
+        return new MyRealm();
+    }
+
     @Bean
-    public DefaultWebSecurityManager securityManager() {
+    public DefaultWebSecurityManager securityManager(MyRealm realm) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
-        securityManager.setRealm(myRealm);
+        securityManager.setRealm(realm);
         return securityManager;
     }
+
     @Bean
     public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager) {
         ShiroFilterFactoryBean shiroFilter = new ShiroFilterFactoryBean();
         shiroFilter.setSecurityManager(securityManager);
-        shiroFilter.setLoginUrl("/login");
-        shiroFilter.setSuccessUrl("/success");
-        shiroFilter.setUnauthorizedUrl("/unauthorized");
-        Map<String,String> filterChainDefinitionMap = new LinkedHashMap<>();
-        filterChainDefinitionMap.put("/login", "anon");
-        filterChainDefinitionMap.put("/logout", "logout");
-        filterChainDefinitionMap.put("/**", "authc");
+        //shiroFilter.setSuccessUrl("/toLogin");
+        //shiroFilter.setLoginUrl("/toLogin");
+        //shiroFilter.setUnauthorizedUrl("/toLogin");
+        Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
+        //filterChainDefinitionMap.put("/login", "anon");
+        //filterChainDefinitionMap.put("/login.html", "anon");
+        //filterChainDefinitionMap.put("/logout", "logout");
+        //filterChainDefinitionMap.put("/static/**", "anon");
+        //filterChainDefinitionMap.put("/**", "anon");
+        filterChainDefinitionMap.put("/**", "anon");
+        //filterChainDefinitionMap.put("/login", "anon");
+        //filterChainDefinitionMap.put("/**", "redirect:/login.html");
+
         shiroFilter.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilter;
     }

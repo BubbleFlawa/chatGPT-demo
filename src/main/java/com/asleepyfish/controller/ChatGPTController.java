@@ -26,15 +26,15 @@ public class ChatGPTController {
     @Autowired
     private ChatAIManager chatAIManager;
 
-    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
+//    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 //    @Autowired
 //    private MqttGateWay
-
-    /**
-     * 向指定的主题中发送消息
-     */
+//
+//    /**
+//     * 向指定的主题中发送消息
+//     */
 //    private String sendMqtt(@RequestParam("topic")String topic,@RequestParam("data")String data) {
-//        System.out.println(sendData);
+//        System.out.println(data);
 //        System.out.println("进入sendMqtt--------" + sendData);
 //
 //    }

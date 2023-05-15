@@ -22,7 +22,7 @@ import org.springframework.messaging.MessagingException;
 /**
  * @Author:huang_wq
  * @CreateTime:2023/5/15
- * @Description: MQTT消费端
+ * @Description: MQTT消费端 -收消息
  */
 @Configuration
 @IntegrationComponentScan

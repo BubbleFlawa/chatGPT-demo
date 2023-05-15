@@ -29,4 +29,13 @@ spring:
     password: 123456
 server:
   port: 8080
-
+#mqtt配置
+com:
+  mqtt:
+    url: tcp://127.0.0.1:61613
+    clientId: mqtt_test1234
+    topics: topic01,topic02
+    username: admin
+    password: password
+    timeout: 10
+    keepalive: 20

@@ -12,8 +12,9 @@ import javax.validation.constraints.NotBlank;
 public class User {
     @TableId(type = IdType.AUTO)
     private Integer id;
-    @NotBlank
+    //@NotBlank
     private String name;
-    @NotBlank
+    //@NotBlank
     private String password;
+    private String salt;
 }

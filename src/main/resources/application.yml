@@ -22,10 +22,11 @@ spring:
       enabled: true #热部署生效
       additional-paths: src/main
       exclude: static/**,templates/** #设置不需要重启的目录
-server:
-  port: 8080
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://192.168.3.221:3306/GPTApi?useSSL=false
     username: root
     password: 123456
+server:
+  port: 8080
+

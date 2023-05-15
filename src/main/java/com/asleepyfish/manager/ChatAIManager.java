@@ -5,8 +5,10 @@ import com.alibaba.fastjson2.JSON;
 import com.asleepyfish.entity.Message;
 import com.asleepyfish.entity.RequestBody;
 import com.asleepyfish.entity.ResponseBody;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
 import java.util.*;
@@ -21,7 +23,7 @@ public class ChatAIManager {
 
     private static final String URL = "https://api.openai.com/v1/chat/completions";
 
-    private static final String API_KEY = "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";
+    private static final String API_KEY = "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";
 
     public String chatAI(String input) {
 //        return JSON.toJSONString("hello");
@@ -50,6 +52,7 @@ public class ChatAIManager {
                 .setProxy(proxy)
                 .execute()
                 .body();
+        System.out.println(reqJSON);
         //回传参数转换类型
         ResponseBody body = JSON.parseObject(reqJSON, ResponseBody.class);
 //        content = body.getChoices().get(0).getMessage().getContent();

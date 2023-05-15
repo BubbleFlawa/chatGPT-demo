@@ -21,9 +21,10 @@ public class ChatAIManager {
 
     private static final String URL = "https://api.openai.com/v1/chat/completions";
 
-    private static final String API_KEY = "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";
+    private static final String API_KEY = "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";
 
     public String chatAI(String input) {
+//        return JSON.toJSONString("hello");
         String content = "";
         //输入
         if ("exit".equals(input)) {
@@ -31,7 +32,7 @@ public class ChatAIManager {
             return content;
         }
         //设置消息
-        List<Message> list = new ArrayList<Message>();
+        List<Message> list = new ArrayList<>();
         Message message = new Message();
         message.setRole("user");
         message.setContent(input);
@@ -51,9 +52,12 @@ public class ChatAIManager {
                 .body();
         //回传参数转换类型
         ResponseBody body = JSON.parseObject(reqJSON, ResponseBody.class);
-        content = body.getChoices().get(0).getMessage().getContent();
+//        content = body.getChoices().get(0).getMessage().getContent();
         //输出回值消息
         System.out.println(content);
-        return content;
+//        return content;
+        return JSON.toJSONString(body.getChoices().get(0).getMessage().getContent());
+//        return body.getChoices().get(0).getMessage().getContent();
+
     }
 }

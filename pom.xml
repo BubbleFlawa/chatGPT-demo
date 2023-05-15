@@ -25,8 +25,19 @@
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <!--热部署-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional><!--依赖不会传递-->
         </dependency>
 
         <dependency>
@@ -95,6 +106,10 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <!--没有该项配置，热部署不会生效-->
+                <configuration>
+                    <fork>true</fork>
+                </configuration>
             </plugin>
         </plugins>
     </build>

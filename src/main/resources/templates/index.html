@@ -54,7 +54,6 @@
 
             var prompt = document.getElementById("chat-gpt-input").value
             var url = "/chat/chatAI/" +prompt;
-            // var url = "/chat/chatAI";
             xhr.open("GET", url, true);
 
             xhr.setRequestHeader("Content-Type", "application/json");
@@ -149,7 +148,7 @@
                         <textarea class="form-control" id="chatgpt-response"
                                   placeholder="长途访问，请耐心等待回答 Ai生成它很快，但是由于网络问题我们需要等待，通常内容越长等待越久 如果长时间没反应请刷新页面重试" rows="26"
                                   resize="none"
-                                  style="width: 150%;height: auto; margin: 0 auto; background-color: #f4f4f4; color: #333; border: 1px solid #ccc; border-radius: 10px; overflow: scroll;"
+                                  style="width: 150%;height: 220px; margin: 65px auto; background-color: #f4f4f4; color: #333; border: 1px solid #ccc; border-radius: 10px; overflow: scroll;"
                                   readonly="true"></textarea>
                     </div>
                 </div>

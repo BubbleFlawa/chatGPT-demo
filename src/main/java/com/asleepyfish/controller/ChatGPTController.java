@@ -1,6 +1,5 @@
 package com.asleepyfish.controller;
 
-import com.asleepyfish.entity.User;
 import com.asleepyfish.manager.ChatAIManager;
 import io.github.asleepyfish.config.ChatGPTProperties;
 import io.github.asleepyfish.service.OpenAiProxyService;
@@ -12,14 +11,13 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.websocket.server.PathParam;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
 
 /**
- * @Author: asleepyfish
- * @Date: 2023-02-18 14:44
+ * @Author: huang_wq
+ * @Date: 2023-05-12 14:44
  * @Description: ChatGPTController
  */
 @Controller
@@ -71,6 +69,12 @@ public class ChatGPTController {
     @GetMapping("/success")
     public String success(HttpSession session, Model model) {
         return "success";
+    }
+
+
+    @GetMapping("/websocket")
+    public String websocket(HttpSession session, Model model) {
+        return "websocket";
     }
 
 

@@ -17,5 +17,12 @@ spring:
     prefix: classpath:/templates/
     mode: HTML
     encoding: UTF-8
+    cache: false #页面修改后，关闭缓存，立刻书信
+  devtools:
+    restart:
+      enabled: true #热部署生效
+      additional-paths: src/main
+      exclude: static/**,templates/** #设置不需要重启的目录
 server:
   port: 8080
+

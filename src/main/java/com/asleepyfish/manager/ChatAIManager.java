@@ -34,7 +34,7 @@ public class ChatAIManager {
     private RedisService redisService;
 
     private static final String URL = "https://api.openai.com/v1/chat/completions";
-    private static final String API_KEY = "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";
+    private static final String API_KEY = "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";
 
     @Async("normalThreadPool")
     public void chatAI(String input) {
@@ -84,10 +84,6 @@ public class ChatAIManager {
             return;
         }
         String answer = JSON.toJSONString(body.getChoices().get(0).getMessage().getContent());
-        if (Objects.isNull(answer)) {
-            mqttPushClient.publish("answer", "服务器异常");
-            return;
-        }
         //发送消息
         mqttPushClient.publish("answer", answer);
         //缓存
@@ -107,10 +103,11 @@ public class ChatAIManager {
         requestBody.setModel("gpt-3.5-turbo");
         requestBody.setMessages(list);
         String data;
-        if (CollectionUtils.isEmpty(list) || list.size() < 6) {
+        if (CollectionUtils.isEmpty(list) || list.size() <= 6) {
             //设置消息
             data = JSON.toJSONString(requestBody);
         } else {
+            list.remove(0);
             list.remove(0);
             data = JSON.toJSONString(requestBody);
         }

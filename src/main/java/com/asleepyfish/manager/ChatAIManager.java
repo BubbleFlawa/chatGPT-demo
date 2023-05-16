@@ -80,7 +80,7 @@ public class ChatAIManager {
         //回传参数转换类型
         ResponseBody body = JSON.parseObject(reqJSON, ResponseBody.class);
         if (Objects.isNull(body) || Objects.isNull(body.getChoices())) {
-            mqttPushClient.publish("answer", "服务器异常");
+            mqttPushClient.publish("answer", "服务器异常：Invalid api_key");
             return;
         }
         String answer = JSON.toJSONString(body.getChoices().get(0).getMessage().getContent());

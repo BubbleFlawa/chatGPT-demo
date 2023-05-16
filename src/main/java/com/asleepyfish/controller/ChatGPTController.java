@@ -31,16 +31,8 @@ public class ChatGPTController {
      */
     @GetMapping("/chatWeb")
     public String chatWeb() {
-        return "indexmqtt.html";
-    }
-    /**
-     * 会话页面
-     */
-    @GetMapping("/c")
-    public String c() {
         return "chatmqtt.html";
     }
-
     /**
      * chat会话
      *

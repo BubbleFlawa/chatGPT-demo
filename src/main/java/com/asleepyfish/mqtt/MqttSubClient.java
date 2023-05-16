@@ -13,14 +13,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class MqttSubClient {
 
-    public MqttSubClient(MqttPushClient mqttPushClient){
+    public MqttSubClient(MqttPushClient mqttPushClient) {
         subScribeDataPublishTopic();
     }
 
 
-    private void subScribeDataPublishTopic(){
-        //订阅test_queue主题
-       subscribe("test_queue");
+    private void subScribeDataPublishTopic() {
+        //订阅question主题
+        subscribe("question");
     }
 
     /**
@@ -43,7 +43,7 @@ public class MqttSubClient {
             MqttClient client = MqttPushClient.getClient();
             if (client == null) return;
             client.subscribe(topic, qos);
-            log.info("订阅主题:{}",topic);
+            log.info("订阅主题:{}", topic);
         } catch (MqttException e) {
             e.printStackTrace();
         }

@@ -17,9 +17,7 @@ public class MqttPushClient{
     @Lazy
     @Autowired
     private PushCallback pushCallback;
-
     private static MqttClient client;
-
 
     public static void setClient(MqttClient client) {
         MqttPushClient.client = client;
@@ -81,7 +79,7 @@ public class MqttPushClient{
         message.setPayload(pushMessage.getBytes());
         MqttTopic mTopic = MqttPushClient.getClient().getTopic(topic);
         if (null == mTopic) {
-            log.error("主题不存在:{}",mTopic);
+            log.error("主题不存在:");
         }
         try {
             mTopic.publish(message);

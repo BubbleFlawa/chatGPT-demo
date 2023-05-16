@@ -7,7 +7,10 @@ import io.github.asleepyfish.util.OpenAiUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -26,19 +29,6 @@ public class ChatGPTController {
     @Autowired
     private ChatAIManager chatAIManager;
 
-//    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
-//    @Autowired
-//    private MqttGateWay
-//
-//    /**
-//     * 向指定的主题中发送消息
-//     */
-//    private String sendMqtt(@RequestParam("topic")String topic,@RequestParam("data")String data) {
-//        System.out.println(data);
-//        System.out.println("进入sendMqtt--------" + sendData);
-//
-//    }
-
     /**
      * 会话页面
      */
@@ -56,7 +46,8 @@ public class ChatGPTController {
     @GetMapping("/chatAI/{input}")
     @ResponseBody
     public String chatAI(@PathVariable String input) {
-        return chatAIManager.chatAI(input);
+        chatAIManager.chatAI(input);
+        return null;
     }
 
     @GetMapping("/register")

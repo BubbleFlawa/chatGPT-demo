@@ -7,10 +7,7 @@ import io.github.asleepyfish.util.OpenAiUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -34,7 +31,7 @@ public class ChatGPTController {
      */
     @GetMapping("/chatWeb")
     public String chatWeb() {
-        return "index.html";
+        return "indexmqtt.html";
     }
 
     /**
@@ -43,9 +40,9 @@ public class ChatGPTController {
      * @param input
      * @return
      */
-    @GetMapping("/chatAI/{input}")
+    @GetMapping("/chatAI")
     @ResponseBody
-    public String chatAI(@PathVariable String input) {
+    public String chatAI(@RequestParam("input") String input) {
         chatAIManager.chatAI(input);
         return null;
     }

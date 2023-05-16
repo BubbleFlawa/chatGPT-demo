@@ -27,6 +27,8 @@
     <script src="../static/js/vendor/modernizr-2.8.3.min.js"></script>
     <script src="../static/js/jquery-3.6.0.js" charset="UTF-8"></script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mqtt/2.23.0/mqtt.min.js"></script>
+
     <script type="text/javascript">
         async function callCHATGPT() {
             var responseText1 = document.getElementById("chatgpt-response");
@@ -53,10 +55,12 @@
 
 
             var prompt = document.getElementById("chat-gpt-input").value
-            var url = "/chat/chatAI/" +prompt;
+            console.log(prompt)
+            var url = "/chat/chatAI";
             xhr.open("GET", url, true);
 
-            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.setRequestHeader("Content-type", "charset=utf-8");
+            // xhr.setRequestHeader("Content-Type", "application/json");
             xhr.setRequestHeader("Authorization", "Bearer sk-123456");
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4 && xhr.status === 200) {
@@ -91,7 +95,40 @@
             });
             console.log(data);
 
-            await xhr.send(prompt);
+            xhr.send(prompt);
+
+            //mqtt
+            //1、创建mqtt客户端实列 网站前端mqtt请求：wss://192.168.1.10/mqtt/
+            // 使用nginx反向代理到没有开启ssl的mqtt服务器
+            // 连接选项
+            const options = {
+                connectTimeout: 4000, // 超时时间
+                // 认证信息
+                clientId: 'emqx-connect-via-websocket',
+                username: 'admin',
+                password: 'public',
+            }
+            const client = mqtt.connect('wss://mqtt.example.com', options);
+
+            //2、连接到mqtt代理
+            client.on('connect', function () {
+                console.log('Connected to MQTT broker');
+                // 订阅主题
+                client.subscribe('my/topic');
+            });
+
+            client.on('reconnect', (error) => {
+                console.log('正在重连:', error)
+            });
+
+            client.on('error', (error) => {
+                console.log('连接失败:', error)
+            });
+
+            //3、处理收到的消息
+            client.on('message', function (topic, message) {
+                console.log('Received message:', message.toString());
+            });
         }
     </script>
 </head>
@@ -133,24 +170,24 @@
         </div>
     </div>
 </div>
-    <script src="../static/js/vendor/jquery-1.12.0.min.js"></script>
-    <script src="../static/js/bootstrap.min.js"></script>
-    <script src="../static/js/isotope.pkgd.min.js"></script>
-    <script src="../static/js/imagesloaded.pkgd.min.js"></script>
-    <script src="../static/js/jquery.magnific-popup.min.js"></script>
-    <script src="../static/js/jquery.meanmenu.js"></script>
-    <script src="../static/js/plugins.js"></script>
-    <script src="../static/js/main.js"></script>
-    <script>
-        var _hmt = _hmt || [];
-        (function () {
-            var hm = document.createElement("script");
-            // hm.src = "https://hm.baidu.com/hm.js?05df94d9887ea8acd5a75f70e8a6bb11";
-            var s = document.getElementsByTagName("script")[0];
-            s.parentNode.insertBefore(hm, s);
-        })();
-        //
-    </script>
+<script src="../static/js/vendor/jquery-1.12.0.min.js"></script>
+<script src="../static/js/bootstrap.min.js"></script>
+<script src="../static/js/isotope.pkgd.min.js"></script>
+<script src="../static/js/imagesloaded.pkgd.min.js"></script>
+<script src="../static/js/jquery.magnific-popup.min.js"></script>
+<script src="../static/js/jquery.meanmenu.js"></script>
+<script src="../static/js/plugins.js"></script>
+<script src="../static/js/main.js"></script>
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        // hm.src = "https://hm.baidu.com/hm.js?05df94d9887ea8acd5a75f70e8a6bb11";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+    //
+</script>
 
 </body>
 

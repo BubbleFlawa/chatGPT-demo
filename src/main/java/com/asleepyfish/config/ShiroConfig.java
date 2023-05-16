@@ -4,7 +4,6 @@ import com.asleepyfish.reaml.MyRealm;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -14,7 +13,7 @@ import java.util.Map;
 @Configuration
 public class ShiroConfig {
     @Bean(name = "myRealm")
-    public MyRealm myRealm(){
+    public MyRealm myRealm() {
         return new MyRealm();
     }
 

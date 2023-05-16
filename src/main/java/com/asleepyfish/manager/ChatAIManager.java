@@ -34,7 +34,7 @@ public class ChatAIManager {
     private RedisService redisService;
 
     private static final String URL = "https://api.openai.com/v1/chat/completions";
-    private static final String API_KEY = "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";
+    private static final String API_KEY = "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";
 
     @Async("normalThreadPool")
     public void chatAI(String input) {

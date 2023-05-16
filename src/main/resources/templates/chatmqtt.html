@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ChatGPT</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        /* 聊天窗口样式 */
+        .chat-window {
+            max-width: 800px;
+            margin: 50px auto;
+            background-color: #f1f1f1;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .chat-header {
+            padding: 20px;
+            background-color: #fff;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .chat-header h2 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: normal;
+        }
+
+        .chat-messages {
+            padding: 20px;
+            height: 400px;
+            overflow-y: scroll;
+        }
+
+        .chat-message {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .chat-message .avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #ccc;
+            margin-right: 10px;
+            flex-shrink: 0;
+        }
+
+        .chat-message .content {
+            flex-grow: 1;
+        }
+
+        .chat-message .content p {
+            margin: 0;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .chat-message.sent .content p {
+            background-color: #DCF8C6;
+        }
+
+        .chat-message.received .content p {
+            background-color: #eee;
+        }
+
+        .chat-footer {
+            padding: 20px;
+            background-color: #fff;
+            border-top: 1px solid #ddd;
+        }
+
+        .chat-footer input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            font-size: 16px;
+        }
+
+        .chat-footer button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+    <script src="../static/js/paho-mqtt.js"></script>
+</head>
+<body>
+<div class="chat-window">
+    <div class="chat-header">
+        <h2>ChatGPT</h2>
+    </div>
+    <div class="chat-messages" id="chat">
+        <!-- 聊天消息将显示在这里 -->
+    </div>
+    <div class="chat-footer">
+        <input id="message" type="text" placeholder="Type a message...">
+        <button  onclick="publishMessage()">Send</button>
+    </div>
+</div>
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+<script src="../static/js/markdown.min.js"></script>
+<script>
+    //生成用户id
+    function uuid() {
+        var s = [];
+        var hexDigits = "0123456789abcdef";
+        for (var i = 0; i < 36; i++) {
+            s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
+        }
+        s[14] = "4"; // bits 12-15 of the time_hi_and_version field to 0010
+        s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1); // bits 6-7 of the clock_seq_hi_and_reserved to 01
+        s[8] = s[13] = s[18] = s[23] = "-";
+
+        var uuid = s.join("");
+        return uuid;
+    }
+    //将历史数据写入
+    function setText(text, uuid_str) {
+        let content = document.getElementById(uuid_str)
+        content.innerHTML = marked(text);
+    }
+
+    let uuid_str = '';
+    //输入的信息
+    let messageElement = document.getElementById("message");
+    //问题和回答的元件
+    let chat = document.getElementById("chat");
+    let uid = window.localStorage.getItem("uid");
+    if (uid == null || uid == '' || uid == 'null') {
+        uid = uuid();
+    }
+    // 设置本地存储
+    window.localStorage.setItem("uid", uid);
+
+    // 创建一个唯一的客户端ID
+    var clientId = "client-" + Math.random().toString(16).substr(2, 8);
+
+    // 创建MQTT客户端对象
+    var client = new Paho.MQTT.Client("192.168.3.221", 8083, clientId);
+
+    // 设置连接断开时的回调函数
+    client.onConnectionLost = onConnectionLost;
+
+    // 设置消息到达时的回调函数
+    client.onMessageArrived = onMessageArrived;
+
+    // 连接到MQTT代理
+    client.connect({
+        onSuccess: onConnect,
+        onFailure: onFailure
+    });
+
+    // 连接成功时的回调函数
+    function onConnect() {
+        console.log("Connected to MQTT broker");
+        // 订阅主题
+        client.subscribe("answer");
+    }
+
+    // 连接失败时的回调函数
+    function onFailure(errorMessage) {
+        console.log("Failed to connect: " + errorMessage.errorMessage);
+    }
+
+    // 连接断开时的回调函数
+    function onConnectionLost(response) {
+        if (response.errorCode !== 0) {
+            console.log("Connection lost: " + response.errorMessage);
+        }
+    }
+
+    // 消息到达时的回调函数
+    function onMessageArrived(message) {
+        console.log("Received message: " + message.payloadString);
+        if (!message.payloadString) {
+            return;
+        }
+        //问题和回答的元件
+        let chat = document.getElementById("chat");
+        //新增
+        chat.innerHTML += '<tr><td><article id="' + uuid_str + '" class="markdown-body">AI:'+message.payloadString+'</article></td></tr>';
+    }
+
+    //窗口关闭时，关闭连接
+    window.unload = function () {
+        client.close();
+    };
+
+    // 按钮事件 = 发布消息
+    function publishMessage() {
+        //输入的信息
+        let messages = document.getElementById("message");
+        //问题和回答的元件
+        let chat = document.getElementById("chat");
+
+        //新增答案框
+        // chat.innerHTML += '<tr><td><article id="' + uuid_str + '" class="markdown-body"></article></td></tr>';
+        var topic = "question";
+        console.log(uid)
+        var payload = '{"name":"www","message":"'+messages.value+'"}';
+
+        var message = new Paho.MQTT.Message(payload);
+        message.destinationName = topic;
+
+        client.send(message);
+        //新增问题框
+        chat.innerHTML += '<tr><td style="height: 50px;">' + messages.value + '</td></tr>';
+        messages.value = null
+    }
+</script>
+</body>
+</html>

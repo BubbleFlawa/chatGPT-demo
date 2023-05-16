@@ -55,7 +55,7 @@
     // 发布消息
     function publishMessage() {
         var topic = "question";
-        var payload = "Hello, MQTT!";
+        var payload = '{"name":"www","message":"再来一次"}';
 
         var message = new Paho.MQTT.Message(payload);
         message.destinationName = topic;
